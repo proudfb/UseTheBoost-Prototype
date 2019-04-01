@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8afe232d55e5e5d4fbc6628e512cb9e3
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 8a77f20b62674e648bc7425688ba9a46
+  - enabled: 1
+    path: Assets/Scenes/CarSelect.unity
+    guid: 71f0edacd835ed7448470dbe2558a2ae
+  - enabled: 1
+    path: Assets/Scenes/PlayableTutorial.unity
+    guid: 255ef140d9091534484d6b20528738d6
+  - enabled: 1
+    path: Assets/Scenes/Construction_Site.unity
+    guid: 7f535ab133539d04abf1c38950291655
+  - enabled: 1
+    path: Assets/Scenes/Sunset_Beach.unity
+    guid: 70074fa0be567c04c8da434acaff0e91
+  m_configObjects: {}

@@ -1,0 +1,5 @@
+Skybox came from CLOD's Skybox asset pack from the unity asset store
+
+BGM is Vampires (instrumental) for the main level, and Jason (instrumental) for the tutorial level. Both are from Endless Summer (The Instrumentals) by The Midnight (Super good band, go check them out).
+
+Everything else was made by me.

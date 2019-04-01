@@ -1,0 +1,19 @@
+Cool Drive - UseTheBoost Prototype:
+Changelog
+
+-A tutorial level has been added, accessible from the instructions screen
+
+-Default skybox has been replaced with an actual skybox, to represent sunset
+
+-The directional global light has been rotated to reflect this.
+
+-All of the "pads" have had their materials reworked. They should now give off a faint glow.
+
+-The magnitude of the effects of some of these pads have been adjusted.
+
+-Boost, Downforce, and Overclock abilities, along with their associated backend requirements, have been imported from the previous previous version of this project
+
+-The Boost ability now has a cooldown icon. Icons for Downforce and Overclock are planned, and will be implemented as soon as I can think of succinct, 64px x 64px representations. Until then, those abilities are disabled.
+
+-Apartment buildings have been added to the scene to imply that this is taking place in a repurposed construction zone
+
