@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sunset_Beach.unity
     guid: 70074fa0be567c04c8da434acaff0e91
+  - enabled: 1
+    path: Assets/Scenes/Great_Forest.unity
+    guid: add083d1bb799f24a8310fe286d65226
   m_configObjects: {}

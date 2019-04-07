@@ -6826,7 +6826,7 @@ MonoBehaviour:
   m_FullTorqueOverAllWheels: 2500
   m_ReverseTorque: 500
   m_MaxHandbrakeTorque: 100000000
-  m_Downforce: 100
+  m_Downforce: 500
   m_SpeedType: 1
   m_Topspeed: 2500
   m_RevRangeBoundary: 1
@@ -6884,9 +6884,8 @@ MonoBehaviour:
   abilityName: Boost
   cooldownTimeBase: 5
   heatGenerated: 40
-  timerText: {fileID: 0}
-  UICoolDown: {fileID: 0}
   CoolDownIcon: {fileID: 21300000, guid: 6c97162b1ccc6ec419868c2fc00a0186, type: 3}
+  AbilitySlot: Ability1
   BoostForce: 50
 --- !u!114 &1769249457
 MonoBehaviour:
@@ -6895,7 +6894,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769249446}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6a2fe1b83450ca4b8b06ce4c6aac2c3, type: 3}
   m_Name: 
@@ -6904,10 +6903,9 @@ MonoBehaviour:
   abilityName: Downforce
   cooldownTimeBase: 5
   heatGenerated: 2
-  timerText: {fileID: 0}
-  UICoolDown: {fileID: 0}
   CoolDownIcon: {fileID: 0}
-  abilityDuration: 0
+  AbilitySlot: Ability2
+  abilityDuration: 5
   debug_Status: {fileID: 0}
   downforceFactor: 10
 --- !u!114 &1769249456
@@ -6926,9 +6924,8 @@ MonoBehaviour:
   abilityName: Overclock
   cooldownTimeBase: 10
   heatGenerated: 2
-  timerText: {fileID: 0}
-  UICoolDown: {fileID: 0}
   CoolDownIcon: {fileID: 0}
+  AbilitySlot: Ability3
   abilityDuration: 0
   debug_Status: {fileID: 0}
   overclockFactor: 10

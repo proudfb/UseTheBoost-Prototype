@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         }
 
         for (int i = 0; i < PlayerInfo.NumberOfPlayers; i++) {
-            Instantiate(PlayerInfo.PlayerCars[i].gameObject, spawnPoints[i].transform.position, Quaternion.identity);
+            Instantiate(PlayerInfo.PlayerCars[i].gameObject, spawnPoints[i].transform.position, spawnPoints[i].transform.rotation);
         }
     }
 }

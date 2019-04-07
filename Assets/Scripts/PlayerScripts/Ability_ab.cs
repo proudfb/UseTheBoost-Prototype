@@ -7,11 +7,11 @@ using UnityEngine.UI;
 /// <summary>
 /// Defines an ability that lasts for one frame. Requires Ability() to be implemented by descendent classes.
 /// </summary>
-public abstract class Ability_ab : BasicAbility_ab
-{
+public abstract class Ability_ab : BasicAbility_ab {
 
     protected bool abilityIsActive = false;
     protected bool abilityIsReady = true;
+
     ///// <summary>
     ///// The name of the axis to use for this input (key, button, etc)
     ///// </summary>
@@ -37,9 +37,14 @@ public abstract class Ability_ab : BasicAbility_ab
     /// <summary>
     /// The textfield used to show the user the remaining cooldown time
     /// </summary>
-    [SerializeField] protected Text timerText;
-    [SerializeField] protected Image UICoolDown;
+    /*[SerializeField]*/
+    protected Text timerText;
+    /*[SerializeField]*/
+    protected Image UICoolDown;
+    protected HeatGenerationController heatGen;
+    protected Rigidbody car;
     [SerializeField] protected Sprite CoolDownIcon;
+    [SerializeField] protected string AbilitySlot;
 
     protected float cooldownTimeLeft;
 
@@ -47,27 +52,41 @@ public abstract class Ability_ab : BasicAbility_ab
     public bool AbilityIsReady { get { return abilityIsReady; } }
     public bool AbilityIsActive { get { return abilityIsActive; } }
 
-    void Awake()
-    {
+    void Awake() {
         //grab our HeatScalar value for this specific car.
         heatScalar = gameObject.GetComponent<CarStats>().HeatScalar;
     }
+
+    protected void UISetup() {
+        GameObject temp = GameObject.FindGameObjectWithTag(AbilitySlot);
+        if (temp == null) {
+            throw new Exception("No " + AbilitySlot + " slot found in UI");
+        }
+        UICoolDown = temp.GetComponent<Image>();
+
+        if (UICoolDown == null) {
+            throw new Exception(AbilitySlot + " doesn't have an image associated with it.");
+        }
+    }
     protected void Start() {
+        UISetup();
+
         Component[] temp = UICoolDown.GetComponentsInChildren<Image>();
         foreach (Image component in temp) {
-            component.sprite = CoolDownIcon; 
+            component.sprite = CoolDownIcon;
         }
         UICoolDown.type = Image.Type.Filled;
         UICoolDown.fillMethod = Image.FillMethod.Horizontal;
         UICoolDown.fillOrigin = 0;
         //UICoolDown.GetComponentInChildren<Image>().sprite = CoolDownIcon;
         UICoolDown.GetComponentInChildren<Image>().color = new Color(255, 255, 255, 128);
+
+        heatGen = gameObject.GetComponent<HeatGenerationController>();
+        car = gameObject.GetComponent<Rigidbody>();
     }
 
-    public override void ActivateAbility()
-    {
-        if (abilityIsReady)
-        {
+    public override void ActivateAbility() {
+        if (abilityIsReady) {
             abilityIsActive = true;
             Ability();
             abilityIsActive = false;
@@ -79,8 +98,7 @@ public abstract class Ability_ab : BasicAbility_ab
     /// <summary>
     /// Activate the cooldown of an ability, making it no longer ready for use.
     /// </summary>
-    protected virtual void ActivateCooldown()
-    {
+    protected virtual void ActivateCooldown() {
         abilityIsReady = false;
         cooldownTimeLeft = cooldownTimeBase;
     }
@@ -90,29 +108,22 @@ public abstract class Ability_ab : BasicAbility_ab
     /// Called each FixedUpdate.
     /// </summary>
     /// <returns>float</returns>
-    public virtual float Cooldown()
-    {
-        if (!abilityIsReady)
-        {
-            if (CooldownTimeLeft <= 0f)
-            {
+    public virtual float Cooldown() {
+        if (!abilityIsReady) {
+            if (CooldownTimeLeft <= 0f) {
                 cooldownTimeLeft = 0f;
                 UICoolDown.fillAmount = 1f;
                 abilityIsReady = true;
-            }
-            else
-            {
+            } else {
                 //if our ability isn't ready, get a value that we can use to determine how long we have left
                 cooldownTimeLeft -= Time.deltaTime;
                 UICoolDown.fillAmount = (-(CooldownTimeLeft / cooldownTimeBase)) + 1;
             }
             return cooldownTimeLeft;
-        }
-        else return 0f;
+        } else return 0f;
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         Cooldown();
         //timerText.text = String.Format("{0:S} ready in: {1:F3} seconds", abilityName, Cooldown());
     }

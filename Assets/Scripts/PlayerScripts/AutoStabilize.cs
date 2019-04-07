@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//As a special ability, Autostabilize is in the Ability3 Slot
+/// <summary>
+/// Quickly lerp towards no rotational forces. As a special ability, Autostabilize is in the Ability3 Slot
+/// </summary>
 public class AutoStabilize : LongAbility_ab {
 
     private HeatGenerationController heatGen;

@@ -20,6 +20,7 @@ public class HeatGenerationController : MonoBehaviour
     /// Basic set, but with reference to UI
     /// </summary>
     /// <param name="amount">The amount to change the heat by</param>
+    /// <param name="factor">The factor to multiply the heat change, used for difficulty levels</param>
     public void ChangeHeat(float amount, float factor = 1) {
         Heat += amount;
         heatSlider.value = Heat;
