@@ -182,7 +182,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Coming soon
+  m_Text: AO-HC-Blindsider
 --- !u!222 &7089439
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Coming soon
+  m_Text: 3rd-USD-Terra
 --- !u!222 &430261708
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -994,7 +994,7 @@ GameObject:
   - component: {fileID: 1349818369}
   - component: {fileID: 1349818368}
   m_Layer: 5
-  m_Name: AAC-Airmaster
+  m_Name: AO-HC-Blindsider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bd4c5336e4b31479f220eb01f880b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCar: {fileID: 8527530772703631746, guid: d186ea1597cb679488a1bf46433e5f43,
+  playerCar: {fileID: 5577248372264987652, guid: 98fd286af9802124a854ff06dd542eb5,
     type: 3}
 --- !u!114 &1349818369
 MonoBehaviour:

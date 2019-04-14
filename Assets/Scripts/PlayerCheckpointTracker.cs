@@ -15,6 +15,9 @@ public class PlayerCheckpointTracker : MonoBehaviour {
     public Text LapCounter;
     public Text CheckpointCounter;
 
+    private Rigidbody car;
+    private HeatGenerationController heatgen;
+
     public int CurrentCheckpoint { get; private set; }
     public Quaternion LastCheckpointRot { get; private set; }
     public Vector3 LastCheckpointPos { get; private set; }
@@ -45,6 +48,11 @@ public class PlayerCheckpointTracker : MonoBehaviour {
         CurrentCheckpoint = CheckpointManager.HighestCheckpoint;
         LapCounter.text = string.Format("Lap {0}/{1}", CurrentLap, GameController.NumberOfLaps);
         CheckpointCounter.text = string.Format("Checkpoint: Start/{0}", CheckpointManager.HighestCheckpoint);
+
+        //set up heatController and car stuff.
+        heatgen = this.GetComponentInParent<HeatGenerationController>();
+        car = this.GetComponentInParent<Rigidbody>();
+
     }
 
     private void Update() {
@@ -84,19 +92,19 @@ public class PlayerCheckpointTracker : MonoBehaviour {
 
     public void Respawn() {
         transform.root.SetPositionAndRotation(LastCheckpointPos + Vector3.up, LastCheckpointRot);
-        this.GetComponentInParent<Rigidbody>().velocity = Vector3.zero;
-        this.GetComponentInParent<Rigidbody>().angularVelocity = Vector3.zero;
+        car.velocity = Vector3.zero;
+        car.angularVelocity = Vector3.zero;
     }
 
     public void Respawn(int deathFlag) {
         switch (deathFlag) {
             case DEATH_BY_HEAT:
                 Debug.Log("Player was too hot.");
-                this.GetComponentInParent<HeatGenerationController>().ResetHeat();
+                heatgen.ResetHeat();
                 break;
             case DEATH_BY_FREEZING:
                 Debug.Log("Player was too cool.");
-                this.GetComponentInParent<HeatGenerationController>().ResetHeat();
+                heatgen.ResetHeat();
                 break;
             case DEATH_BY_ZONE_OUT:
                 Debug.Log("Player had a falling out.");

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Boost : Ability_ab {
     //As a mobility option, Boost is always in the Ability1 slot
-    private AudioSource rocketBoost;
+    [SerializeField] private AudioClip rocketBoost;
     [SerializeField] private float BoostForce = 20;
+    private AudioSource audiosource;
 
     new void Start() {
         base.Start();
-        rocketBoost = gameObject.GetComponent<AudioSource>();
+        audiosource = gameObject.AddComponent<AudioSource>() as AudioSource;
     }
 
     protected override void Ability() {
         //ROCKETBOOST YEAH
         car.AddRelativeForce(Vector3.forward * BoostForce, ForceMode.VelocityChange);
         //AUDIO YEAH
-        rocketBoost.Play();
+        audiosource.PlayOneShot(rocketBoost);
         //OVERHEAT YEAH
         heatGen.ChangeHeat(heatGenerated, heatScalar);
     }

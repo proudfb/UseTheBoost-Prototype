@@ -3,7 +3,8 @@ guid: acbcec6ead6feee4884200fa55310027
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CoolDownIcon: {fileID: 21300000, guid: 6ce3bf075d8347f42893242872ea50e6, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

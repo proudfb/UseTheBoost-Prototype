@@ -26,23 +26,14 @@ public class SpecialAbilityController : MonoBehaviour {
             }
         }
 	}
-	
-	void FixedUpdate () {
+
+	void Update () {
+        //update instead of fixed update for basic (one frame) abilities, since GetKeyDown needs it.
         foreach (Ability_ab ability in abilities)
         {
             if (Input.GetButtonDown(ability.AxisName))
             {
                 ability.ActivateAbility();
-            }
-        }
-
-        foreach (BasicAbility_ab Bability in basicAbilities)
-        {
-            //Debug.Log("The axis I'm geting is called: " + Bability.AxisName);
-            if (Input.GetAxis(Bability.AxisName) != 0)
-            {
-                //Debug.Log("SHOULD BE ROTATING!");
-                Bability.ActivateAbility();
             }
         }
 
@@ -53,13 +44,15 @@ public class SpecialAbilityController : MonoBehaviour {
                 lAbility.ToggleAbility();
             }
         }
+    }
 
-        //Overclock
-        //Debug.Log("Overclock key is signalling:"+Input.GetAxis("Fire1").ToString());
-        //if (Input.GetKey(KeyCode.V))
-        //{
-        //    //gameObject.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * OverclockAccel * Time.deltaTime, ForceMode.Acceleration);
-        //    //heatGen.ChangeHeat(.125f, heatScalar);
-        //}
+    private void FixedUpdate() {
+        foreach (BasicAbility_ab Bability in basicAbilities) {
+            //Debug.Log("The axis I'm geting is called: " + Bability.AxisName);
+            if (Input.GetAxis(Bability.AxisName) != 0) {
+                //Debug.Log("SHOULD BE ROTATING!");
+                Bability.ActivateAbility();
+            }
+        }
     }
 }

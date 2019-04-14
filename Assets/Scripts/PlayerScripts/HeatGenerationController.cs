@@ -11,6 +11,8 @@ public class HeatGenerationController : MonoBehaviour
 
     public Slider heatSlider;
 
+    private PlayerCheckpointTracker pct;
+
     /// <summary>
     /// The rate of heat generation, in heat buildup/second
     /// </summary>
@@ -25,10 +27,10 @@ public class HeatGenerationController : MonoBehaviour
         Heat += amount;
         heatSlider.value = Heat;
         if (Heat < heatSlider.minValue) {
-            GetComponentInParent<PlayerCheckpointTracker>().Respawn(PlayerCheckpointTracker.DEATH_BY_FREEZING);
+            pct.Respawn(PlayerCheckpointTracker.DEATH_BY_FREEZING);
         }
         if (Heat > heatSlider.maxValue) {
-            GetComponentInParent<PlayerCheckpointTracker>().Respawn(PlayerCheckpointTracker.DEATH_BY_HEAT);
+            pct.Respawn(PlayerCheckpointTracker.DEATH_BY_HEAT);
         }
     }
 
@@ -45,6 +47,9 @@ public class HeatGenerationController : MonoBehaviour
         if (heatSlider == null) {
             throw new System.Exception("There is no heat slider!");
         }
+
+        pct = GetComponentInParent<PlayerCheckpointTracker>();
+
         Heat = startingHeat;
     }
 

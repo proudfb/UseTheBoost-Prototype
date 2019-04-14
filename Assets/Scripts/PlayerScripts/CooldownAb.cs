@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class CooldownAb : LongAbility_ab {
     protected override void Ability() {
-        car.AddRelativeForce(0, 0, -(car.velocity.z / 2), ForceMode.Acceleration);
+        car.AddRelativeForce(car.transform.InverseTransformDirection(0,0,-car.velocity.z*.5f), ForceMode.Acceleration);
         heatGen.ChangeHeat(-heatGenerated, (1 / heatScalar));
     }
 }

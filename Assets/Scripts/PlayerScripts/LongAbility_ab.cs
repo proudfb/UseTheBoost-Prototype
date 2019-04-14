@@ -11,8 +11,10 @@ public abstract class LongAbility_ab : Ability_ab {
     /// <summary>
     /// How long does this ability last, in seconds?
     /// </summary>
+    [Tooltip("How long does this ability last, in seconds?")]
     [SerializeField] protected float abilityDuration;
-    [SerializeField] protected Text debug_Status;
+    //[SerializeField] protected Text debug_Status;
+    [SerializeField] protected Sprite ActiveIcon;
 
     protected float abilityTimeLeft = 0f;
 
@@ -22,9 +24,11 @@ public abstract class LongAbility_ab : Ability_ab {
     public override void ActivateAbility() {
         this.abilityIsActive = true;
         this.abilityTimeLeft = abilityDuration;//set the duration
+        UICoolDown.sprite = ActiveIcon;
     }
 
     protected override void ActivateCooldown() {
+        UICoolDown.sprite = CoolDownIcon;
         base.ActivateCooldown();
 
     }

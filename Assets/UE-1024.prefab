@@ -540,13 +540,13 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_Enabled: 1
 --- !u!82 &4999030926746043343
 AudioSource:
@@ -713,13 +713,13 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_Enabled: 1
 --- !u!82 &1710954516687517596
 AudioSource:
@@ -1096,13 +1096,13 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_Enabled: 1
 --- !u!82 &5936866401310851669
 AudioSource:
@@ -1408,13 +1408,13 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.1
   m_Enabled: 1
 --- !u!82 &4814976959943184858
 AudioSource:
@@ -6290,8 +6290,8 @@ GameObject:
   - component: {fileID: 5056890016984701083}
   - component: {fileID: 4866507011800950253}
   - component: {fileID: 5522652758676700451}
-  - component: {fileID: 2761019943418004398}
   - component: {fileID: 3296160356683383028}
+  - component: {fileID: 2761019943418004398}
   - component: {fileID: 8337147912351093964}
   - component: {fileID: 4927810822932679711}
   - component: {fileID: 6710285164340929110}
@@ -6379,7 +6379,7 @@ MonoBehaviour:
   m_FullTorqueOverAllWheels: 2500
   m_ReverseTorque: 500
   m_MaxHandbrakeTorque: 100000000
-  m_Downforce: 400
+  m_Downforce: 140
   m_SpeedType: 1
   m_Topspeed: 2500
   m_RevRangeBoundary: 1
@@ -6439,7 +6439,29 @@ MonoBehaviour:
   heatGenerated: 40
   CoolDownIcon: {fileID: 21300000, guid: 6c97162b1ccc6ec419868c2fc00a0186, type: 3}
   AbilitySlot: Ability1
+  rocketBoost: {fileID: 8300000, guid: 3a4ab0fa2adb31446a97faa8173d86ec, type: 3}
   BoostForce: 50
+--- !u!114 &3296160356683383028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315107352401856404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc46c7b797c83464e8f24da9a13bf76f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axisName: Fire2
+  abilityName: Glide
+  cooldownTimeBase: 10
+  heatGenerated: 1.25
+  CoolDownIcon: {fileID: 21300000, guid: a565caacf061a034ea91d1aafca5cb51, type: 3}
+  AbilitySlot: Ability2
+  abilityDuration: 5
+  ActiveIcon: {fileID: 21300000, guid: 3d7735c881ec9994db1eb2c05238e688, type: 3}
+  antiGravScale: 0.5
 --- !u!114 &2761019943418004398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6459,28 +6481,7 @@ MonoBehaviour:
   CoolDownIcon: {fileID: 21300000, guid: 5cd6b82dcfd64494893a6fb14d1a8650, type: 3}
   AbilitySlot: Ability3
   abilityDuration: 5
-  debug_Status: {fileID: 0}
---- !u!114 &3296160356683383028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6315107352401856404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc46c7b797c83464e8f24da9a13bf76f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axisName: Fire2
-  abilityName: Glide
-  cooldownTimeBase: 10
-  heatGenerated: 1.25
-  CoolDownIcon: {fileID: 0}
-  AbilitySlot: Ability2
-  abilityDuration: 5
-  debug_Status: {fileID: 0}
-  antiGravScale: 0.5
+  ActiveIcon: {fileID: 21300000, guid: 4928c283f428f114c85d9186371565f4, type: 3}
 --- !u!114 &8337147912351093964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6586,7 +6587,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6315107352401856404}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3a4ab0fa2adb31446a97faa8173d86ec, type: 3}

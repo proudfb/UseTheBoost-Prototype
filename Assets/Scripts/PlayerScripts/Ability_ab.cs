@@ -87,10 +87,7 @@ public abstract class Ability_ab : BasicAbility_ab {
 
     public override void ActivateAbility() {
         if (abilityIsReady) {
-            abilityIsActive = true;
             Ability();
-            abilityIsActive = false;
-            //timeSinceLastActive = Time.time;
             ActivateCooldown();
         }
     }
