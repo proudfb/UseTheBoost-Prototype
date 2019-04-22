@@ -1,21 +1,35 @@
-﻿using System.Collections;
+﻿using Statics;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityStandardAssets.Vehicles.Car;
 
+/// <summary>
+/// Manage the starting and ending of races
+/// </summary>
 public class GameController : MonoBehaviour
 {
     public static int NumberOfLaps = 3;
     public int AltNumberOfLaps;
     public string NextLevel;
+    //bool to allow waiting at the end screen.
 
-    public UnityStandardAssets.Vehicles.Car.CarController debug_Car;
+    //UI
+    public static List<float[]> PlayerTimes { get; set; }
 
-    //private GameObject startingGrid;
+    private Canvas endScreen;
+    private Text nextLevelText;
+    private Text bestTimeText;
+    
+    public CarController debug_Car;
     public static GameObject[] spawnPoints;
 
     private void Awake() {
-        //startingGrid = GameObject.Find("StartingGrid");
+
         if (PlayerInfo.NumberOfPlayers<1) {
             PlayerInfo.NumberOfPlayers = 1;
         }
@@ -24,25 +38,31 @@ public class GameController : MonoBehaviour
         }
         //also check PlayerInfo when changing this
         spawnPoints = new GameObject[4];
+        //link up UI stuff
+        GameObject temp = GameObject.FindGameObjectWithTag("EndScreen");
+        if (temp!= null) {
+            endScreen = temp.GetComponent<Canvas>();
+        }
+        temp = GameObject.FindGameObjectWithTag("NextLevelText");
+        if (temp != null) {
+            nextLevelText = temp.GetComponent<Text>();
+        }
+        temp = GameObject.FindGameObjectWithTag("BestTimeText");
+        if (temp != null) {
+            bestTimeText = temp.GetComponent<Text>();
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        endScreen.gameObject.SetActive(false);
         if (AltNumberOfLaps>0) {
             NumberOfLaps = AltNumberOfLaps;
         }
         Setup();
+        Debug.Log(PlayerPrefs.GetString(SceneManager.GetActiveScene().name));
     }
-
-    public void FinishRace() {
-        if (NextLevel == null || NextLevel == "" || SceneManager.GetSceneByName(NextLevel).IsValid()) {
-            SceneManager.LoadScene("MainMenu");
-        } else {
-            SceneManager.LoadScene(NextLevel);
-        }
-    }
-
     private void Setup() {
         //error out if there is no starting grid.
         if (spawnPoints == null || spawnPoints.Length == 0) {
@@ -50,7 +70,7 @@ public class GameController : MonoBehaviour
         }
 
         //or if there are no players
-        if (PlayerInfo.NumberOfPlayers<1) {
+        if (PlayerInfo.NumberOfPlayers < 1) {
             throw new System.Exception("There are no players, or the NumberOfPlayers variable was not set.");
         }
 
@@ -62,5 +82,86 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < PlayerInfo.NumberOfPlayers; i++) {
             Instantiate(PlayerInfo.PlayerCars[i].gameObject, spawnPoints[i].transform.position, spawnPoints[i].transform.rotation);
         }
+    }
+
+    public void FinishRace(float[] times) {
+        //disable ui stuff
+        AudioSource[] au;
+        GameObject.FindGameObjectWithTag("BaseUI").SetActive(false);
+        //Mute audio coming from from players
+        CarController[] players = FindObjectsOfType<CarController>();
+        foreach (CarController player in players) {
+            au = player.GetComponents<AudioSource>();
+            foreach (AudioSource audio in au) {
+                audio.mute = true;
+            }
+        }
+        //get our times, then pause the game
+        endScreen.GetComponentInChildren<DisplayScores>().DisplayTimes(times);
+        PauseHelper.Pause();
+        nextLevelText.text = "Loading...";
+        string bestTime = BestTimes(times, out bool newBest);
+        if (newBest) {
+            bestTimeText.text = bestTime + "\n(A NEW RECORD!)";
+        } else {
+            bestTimeText.text = bestTime;
+        }
+        endScreen.gameObject.SetActive(true);
+        StartCoroutine(LoadAsync());
+    }
+
+    private IEnumerator LoadAsync() {
+        AsyncOperation asyncLoad;
+        if (NextLevel == null || NextLevel == "" || SceneManager.GetSceneByName(NextLevel).IsValid()) {
+            asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+        } else {
+            asyncLoad = SceneManager.LoadSceneAsync(NextLevel);
+        }
+
+        asyncLoad.allowSceneActivation = false;
+
+        while (!asyncLoad.isDone) {
+            if (asyncLoad.progress >= 0.9f) {
+                nextLevelText.text = "Press Space";
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    PauseHelper.Unpause();
+                    asyncLoad.allowSceneActivation = true;
+                }
+            } else {
+                nextLevelText.text = string.Format("Loading... {0:P2}", asyncLoad.progress);
+            }
+            yield return null;
+        }
+
+    }
+
+    /// <summary>
+    /// Get (and sometimes set) the best time from/to PlayerPrefs
+    /// </summary>
+    /// <param name="times">The array of times generated by PlayerCheckpointTracker</param>
+    /// <param name="newBest">Was a new best time set?</param>
+    /// <returns>The best time, as a formatted string: "Best: {0:mm\\:ss\\.fff}"</returns>
+    private string BestTimes(float[] times, out bool newBest) {
+        StringBuilder sb = new StringBuilder("");
+        TimeSpan span = TimeSpan.FromSeconds(times[times.Length - 1] - times[0]);
+        TimeSpan best;
+        try {
+           best = TimeSpan.FromSeconds(PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name, 259200)); //259200 = 3 days
+        }
+        catch (ArgumentNullException) {
+            best = TimeSpan.FromDays(3);
+        }
+        if (span < best) {//if we have a new best time,
+            //write it to PlayerPrefs.
+            sb.AppendFormat("{0:mm\\:ss\\.fff}", span);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name, times[times.Length - 1] - times[0]);
+            PlayerPrefs.Save();
+            newBest = true;
+            return string.Format("Best: {0:mm\\:ss\\.fff}", span);
+        } else {
+            newBest = false;
+            return string.Format("Best: {0:mm\\:ss\\.fff}", best);
+        }
+        
     }
 }

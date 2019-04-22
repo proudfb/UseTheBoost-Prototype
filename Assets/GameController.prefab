@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1796053426431045518}
   - component: {fileID: 1796053426431045519}
   - component: {fileID: 1796053426431045516}
+  - component: {fileID: 5967095246526938467}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -58,4 +59,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AltNumberOfLaps: 1
   NextLevel: 
+  readyForLevel: 0
   debug_Car: {fileID: 0}
+--- !u!114 &5967095246526938467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796053426431045517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ea155f4432f224fadfe23d9bef4e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

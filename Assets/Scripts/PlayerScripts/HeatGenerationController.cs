@@ -13,6 +13,11 @@ public class HeatGenerationController : MonoBehaviour
 
     private PlayerCheckpointTracker pct;
 
+    public AudioClip HeatWarning;
+    public AudioClip FreezeWarning;
+
+    private AudioSource au;
+
     /// <summary>
     /// The rate of heat generation, in heat buildup/second
     /// </summary>
@@ -24,8 +29,14 @@ public class HeatGenerationController : MonoBehaviour
     /// <param name="amount">The amount to change the heat by</param>
     /// <param name="factor">The factor to multiply the heat change, used for difficulty levels</param>
     public void ChangeHeat(float amount, float factor = 1) {
-        Heat += amount;
+        Heat += amount*factor;
         heatSlider.value = Heat;
+        if (Heat < (heatSlider.minValue+80) && !au.isPlaying) {
+            au.PlayOneShot(FreezeWarning);
+        }
+        if (Heat > (heatSlider.maxValue - 80) && !au.isPlaying) {
+            au.PlayOneShot(HeatWarning);
+        }
         if (Heat < heatSlider.minValue) {
             pct.Respawn(PlayerCheckpointTracker.DEATH_BY_FREEZING);
         }
@@ -48,12 +59,24 @@ public class HeatGenerationController : MonoBehaviour
             throw new System.Exception("There is no heat slider!");
         }
 
+        au = gameObject.AddComponent<AudioSource>() as AudioSource;
+
         pct = GetComponentInParent<PlayerCheckpointTracker>();
+        pct.respawn.AddListener(ResetAudio);
 
         Heat = startingHeat;
     }
 
     private void FixedUpdate() {
         ChangeHeat(heatRate * .02f);
+    }
+
+    private void ResetAudio() {
+        if (au == null) {
+            au = gameObject.AddComponent<AudioSource>() as AudioSource;
+        }
+    }
+    private void OnDestroy() {
+        pct.respawn.RemoveListener(ResetAudio);
     }
 }

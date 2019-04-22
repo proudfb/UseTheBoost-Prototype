@@ -6,9 +6,6 @@ using UnityEngine;
 /// Quickly lerp towards no rotational forces. As a special ability, Autostabilize is in the Ability3 Slot
 /// </summary>
 public class AutoStabilize : LongAbility_ab {
-
-    private HeatGenerationController heatGen;
-    Rigidbody car;
     public override void ActivateAbility() {
         this.abilityIsActive = true;//set the ability to "active"
         this.abilityTimeLeft = abilityDuration;//set the duration

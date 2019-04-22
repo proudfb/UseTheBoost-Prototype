@@ -14,6 +14,13 @@ TagManager:
   - LapMonitor
   - BGM_Controller
   - Ability3
+  - Fire
+  - EndScreen
+  - BaseUI
+  - Timer
+  - BGM
+  - NextLevelText
+  - BestTimeText
   layers:
   - Default
   - TransparentFX
